@@ -9,31 +9,24 @@ const API_ENDPOINTS = {
   'e': 'http://20.244.56.144/evaluation-service/even',
   'r': 'http://20.244.56.144/evaluation-service/rand'
 };
-
 const MOCK_DATA = {
   'e': [2, 4, 6, 8] 
 };
-
 let callCount = 0;
-
 async function getNumbersFromAPI(type) {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 500);
-    
     const response = await fetch(API_ENDPOINTS[type], {
       signal: controller.signal,
       headers: {
         'Accept': 'application/json'
       }
-    });
-    
+    }); 
     clearTimeout(timeoutId);
-    
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
-    }
-    
+    } 
     const data = await response.json();
     return data.numbers || [];
   } catch (error) {
@@ -48,7 +41,6 @@ async function getNumbersFromAPI(type) {
     return [];
   }
 }
-
 function addToWindow(newNumbers) {
   const prevWindow = [...numbersWindow];
   
